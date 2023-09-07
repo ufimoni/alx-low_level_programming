@@ -1,0 +1,23 @@
+#!/bin/bash
+# so now here is a c file that  will check it
+
+# SO we  Check if the $CFILE variable is set
+# using the if statement.
+if [ -z "$CFILE" ]; then
+  echo "Error: C file name not provided. Set the CFILE environment variable."
+  exit 1
+fi
+
+# Define the output file name
+OUTPUT_FILE="${CFILE%.*}.o"
+
+# Compile the C file without linking
+gcc -c "$CFILE" -o "$OUTPUT_FILE"
+
+# Check if the compilation was successful
+if [ $? -ne 0 ]; then
+  echo "Error: Failed to compile the C file."
+  exit 1
+fi
+
+echo "Object file saved as: $OUTPUT_FILE"
