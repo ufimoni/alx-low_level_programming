@@ -1,0 +1,24 @@
+#!/bin/bash
+# this file is a file that rums a script if it is executable. 
+# Check if the $CFILE variable is set
+if [ -z "$CFILE" ]; then
+  echo "Error: C file name not provided. Set the CFILE environment variable."
+  exit 1
+fi
+
+# To define the output file_name
+OUTPUT_FILE="c/${CFILE%.*}.preprocessed.c"
+
+# Create the 'c' directory if it doesn't exist
+mkdir -p c
+
+# Run the C file through the preprocessor and save the result
+cpp -E "$CFILE" -o "$OUTPUT_FILE"
+
+# Check if the preprocessor ran successfully
+if [ $? -ne 0 ]; then
+  echo "Error: Failed to preprocess the C file."
+  exit 1
+fi
+
+echo "Preprocessed file saved as: $OUTPUT_FILE"
